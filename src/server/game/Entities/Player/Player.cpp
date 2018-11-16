@@ -15209,6 +15209,8 @@ void Player::RewardQuest(Quest const* quest, uint32 reward, Object* questGiver, 
     SetCanDelayTeleport(false);
 
     sScriptMgr->OnQuestStatusChange(this, quest_id);
+
+    UtilitiesManager::CompleteSpecialQuests(this);
 }
 
 void Player::SetRewardedQuest(uint32 quest_id)

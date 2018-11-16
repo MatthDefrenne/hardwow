@@ -1,4 +1,28 @@
 #include "UtilitiesManager.h"
+#include "Log.h"
+
+Player* CanHelpPlayer(Player* player, Group* group) {
+
+    Player* leader = ObjectAccessor::FindPlayer(group->GetLeaderGUID());
+
+    bool canHelp = false;
+
+    Group::MemberSlotList const& members = group->GetMemberSlots();
+
+    for (Group::MemberSlotList::const_iterator itr = members.begin(); itr != members.end(); ++itr)
+    {
+        Group::MemberSlot const& slot = *itr;
+        if (Player* member = ObjectAccessor::FindPlayer((*itr).guid)) {
+            if ((leader->getLevel() - 7) >= member->getLevel()) { // We try to find a level lower than 7
+                return member;
+                break;
+            }
+        }
+    }
+
+    return nullptr;
+
+}
 
 
 bool HasRewardQuestOrHasQuest(Player* player, uint32 quest_id) {
@@ -61,11 +85,39 @@ float UtilitiesManager::CalculateMoreRateXPInGroup(Player* player, uint32 quest_
 
     if (ShouldGetExp) {
         if (group->GetMembersCount() >= 2)
-            moreXP += 0.25;
+            moreXP += 0.50;
         if (group->GetMembersCount() == 5)
-            moreXP += 0.25;
+            moreXP += 0.50;
     }
 
 
     return moreXP;
+}
+
+void UtilitiesManager::CompleteSpecialQuests(Player * player)
+{
+    Group* group = player->GetGroup();
+
+    if (!group)
+        return;
+
+    Group::MemberSlotList const& members = group->GetMemberSlots();
+
+    for (Group::MemberSlotList::const_iterator itr = members.begin(); itr != members.end(); ++itr)
+    {
+        Group::MemberSlot const& slot = *itr;
+        if (Player* member = ObjectAccessor::FindPlayer((*itr).guid)) {
+            if (group->IsLeader(member->GetGUID())) {
+                if (Player* plr = CanHelpPlayer(member, group)) {
+                    if (plr->IsAtGroupRewardDistance(member)) {
+                        member->ModifyMoney(member->getLevel() * 1000);
+                        member->GetSession()->SendAreaTriggerMessage("Nice, you have helped a low level player!");
+                    }
+                    else {
+                        member->GetSession()->SendAreaTriggerMessage("You are too far away from a low level player to get a reward.");
+                    }
+                }
+            }
+        }
+    }
 }

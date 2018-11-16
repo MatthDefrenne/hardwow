@@ -57,6 +57,17 @@ public:
     }
 };
 
+class CreatureKill : public PlayerScript
+{
+public:
+    CreatureKill() : PlayerScript("CreatureKill") { }
+
+    void OnCreatureKill(Player* killer, Creature* killed) {
+
+
+    }
+};
+
 
 
 class TeleporterForNewPlayerScript : public CreatureScript

@@ -17,12 +17,12 @@
 
 // This is where scripts' loading functions should be declared:
 
-void AddSC_EnchancedChatChannelScript();
+//void AddSC_EnchancedChatChannelScript();
 void AddSC_NewUserUtilities();
 // The name of this function should match:
 // void Add${NameOfDirectory}Scripts()
 void AddCustomScripts()
 {
-    AddSC_EnchancedChatChannelScript();
+  //  AddSC_EnchancedChatChannelScript();
     AddSC_NewUserUtilities();
 }
