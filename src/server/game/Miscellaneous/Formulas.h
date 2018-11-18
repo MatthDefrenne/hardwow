@@ -185,10 +185,13 @@ namespace Trinity
                     if (creature->isElite())
                     {
                         // Elites in instances have a 2.75x XP bonus instead of the regular 2x world bonus.
-                        if (u->GetMap()->IsDungeon())
-                            xpMod *= 5.75f;
+                        if (u->GetMap()->IsDungeon()) {
+                            xpMod *= 50.75f;
+                            if (creature->IsDungeonBoss())
+                                xpMod *= 100.f;
+                        }
                         else
-                            xpMod *= 4.75f;
+                            xpMod *= 25.75f;
                     }
 
                     xpMod *= creature->GetCreatureTemplate()->ModExperience;

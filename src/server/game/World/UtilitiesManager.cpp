@@ -1,5 +1,6 @@
 #include "UtilitiesManager.h"
 #include "Log.h"
+#include "Chat.h"
 
 Player* CanHelpPlayer(Player* player, Group* group) {
 
@@ -110,11 +111,13 @@ void UtilitiesManager::CompleteSpecialQuests(Player * player)
             if (group->IsLeader(member->GetGUID())) {
                 if (Player* plr = CanHelpPlayer(member, group)) {
                     if (plr->IsAtGroupRewardDistance(member)) {
-                        member->ModifyMoney(member->getLevel() * 1000);
-                        member->GetSession()->SendAreaTriggerMessage("Nice, you have helped a low level player!");
+                        uint32 amount = urand(500, 1000);
+                        member->ModifyMoney(member->getLevel() * amount);
+                        std::string msg = "|cff00FF11Great! You have helped a lower level player than you. You get |cffF2B700" + std::to_string(amount) + "|r golds|r";
+                        ChatHandler(player->GetSession()).SendSysMessage(msg.c_str());
                     }
                     else {
-                        member->GetSession()->SendAreaTriggerMessage("You are too far away from a low level player to get a reward.");
+                        member->GetSession()->SendAreaTriggerMessage("|cffFF0000You are too far away from a low level player to get a reward.|r");
                     }
                 }
             }

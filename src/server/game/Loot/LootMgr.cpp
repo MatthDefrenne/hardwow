@@ -292,7 +292,7 @@ bool LootStoreItem::Roll(bool rate, float moreChance) const
 
     float qualityModifier = pProto && rate ? sWorld->getRate(qualityToRate[pProto->Quality]) : 1.0f;
 
-    return roll_chance_f(chance*qualityModifier*moreChance);
+    return roll_chance_f(chance*qualityModifier);
 }
 
 // Checks correctness of values
@@ -582,7 +582,7 @@ void LootTemplate::Process(Loot& loot, bool rate, uint16 lootMode, uint8 groupId
         if (!(item->lootmode & lootMode))                       // Do not add if mode mismatch
             continue;
 
-        if (!item->Roll(rate, UtilitiesManager::CalculateMoreChanceInGroup(player)))
+        if (!item->Roll(rate, 1.0f))
             continue;                                           // Bad luck for the entry
 
         if (item->reference > 0)                            // References processing

@@ -77,19 +77,19 @@ public:
 
     static bool OnGossipHello(Player * player, Creature * creature)
     {
-        if (player->GetTeam() == ALLIANCE) {
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Human start zone", GOSSIP_SENDER_MAIN, 1);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Drawf/Gnome start zone", GOSSIP_SENDER_MAIN, 3);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Night Elf start zone", GOSSIP_SENDER_MAIN, 4);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Draenei start zone", GOSSIP_SENDER_MAIN, 11);
-        }
-        else {
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Orc/Troll start zone", GOSSIP_SENDER_MAIN, 2);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Tauren start zone", GOSSIP_SENDER_MAIN, 6);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Blood Elf start zone", GOSSIP_SENDER_MAIN, 10);
-            AddGossipItemFor(player, GOSSIP_ACTION_TAXI, "Teleport to Undead start zone", GOSSIP_SENDER_MAIN, 5);
-        }
-       
+
+            if (player->GetTeam() == ALLIANCE) {
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Human start zone", GOSSIP_SENDER_MAIN, 1);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Drawf/Gnome start zone", GOSSIP_SENDER_MAIN, 3);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Night Elf start zone", GOSSIP_SENDER_MAIN, 4);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Draenei start zone", GOSSIP_SENDER_MAIN, 11);
+            }
+            else {
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Orc/Troll start zone", GOSSIP_SENDER_MAIN, 2);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Tauren start zone", GOSSIP_SENDER_MAIN, 6);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Blood Elf start zone", GOSSIP_SENDER_MAIN, 10);
+                AddGossipItemFor(player, GOSSIP_ICON_TAXI, "Teleport to Undead start zone", GOSSIP_SENDER_MAIN, 5);
+            }
         SendGossipMenuFor(player, 50050, creature->GetGUID());
         return true;
     }
