@@ -22,7 +22,6 @@ Player* CanHelpPlayer(Player* player, Group* group) {
     }
 
     return nullptr;
-
 }
 
 

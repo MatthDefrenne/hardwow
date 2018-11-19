@@ -8414,8 +8414,8 @@ void Player::SendLoot(ObjectGuid guid, LootType loot_type)
                     group->UpdateLooterGuid(go);
             }
 
-            if (GameObjectTemplateAddon const* addon = go->GetTemplateAddon())
-                loot->generateMoneyLoot(addon->Mingold, addon->Maxgold);
+            if (GameObjectTemplateAddon const* addon = sObjectMgr->GetGameObjectTemplateAddon(go->GetEntry()))
+                this->ModifyMoney(urand(addon->Mingold, addon->Maxgold));
 
             if (loot_type == LOOT_FISHING)
                 go->getFishLoot(loot, this);
