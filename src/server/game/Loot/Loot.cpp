@@ -403,7 +403,7 @@ void Loot::generateMoneyLoot(uint32 minAmount, uint32 maxAmount, bool isWorldBos
         if (maxAmount <= minAmount)
             gold = uint32(maxAmount * sWorld->getRate(RATE_DROP_MONEY));
         else if ((maxAmount - minAmount) < 32700)
-            gold = uint32(urand(minAmount, maxAmount) * sWorld->getRate(RATE_DROP_MONEY));
+            gold = uint32(urand(minAmount, maxAmount) * isWorldBoss == true ? 5.f : sWorld->getRate(RATE_DROP_MONEY));
         else
             gold = uint32(urand(minAmount >> 8, maxAmount >> 8) * isWorldBoss == true ? 5.f : sWorld->getRate(RATE_DROP_MONEY)) << 8;
     }
