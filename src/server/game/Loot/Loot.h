@@ -240,7 +240,7 @@ struct TC_GAME_API Loot
     void AddLooter(ObjectGuid GUID) { PlayersLooting.insert(GUID); }
     void RemoveLooter(ObjectGuid GUID) { PlayersLooting.erase(GUID); }
 
-    void generateMoneyLoot(uint32 minAmount, uint32 maxAmount);
+    void generateMoneyLoot(uint32 minAmount, uint32 maxAmount, bool isWorldBoss = false);
     bool FillLoot(uint32 lootId, LootStore const& store, Player* lootOwner, bool personal, bool noEmptyError = false, uint16 lootMode = LOOT_MODE_DEFAULT);
 
     // Inserts the item into the loot (called by LootTemplate processors)

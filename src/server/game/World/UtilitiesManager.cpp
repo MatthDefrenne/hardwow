@@ -14,7 +14,7 @@ Player* CanHelpPlayer(Player* player, Group* group) {
     {
         Group::MemberSlot const& slot = *itr;
         if (Player* member = ObjectAccessor::FindPlayer((*itr).guid)) {
-            if ((leader->getLevel() - 7) >= member->getLevel()) { // We try to find a level lower than 7
+            if ((leader->getLevel() - 7) >= member->getLevel() && leader->GetSession()->GetRemoteAddress() != member->GetSession()->GetRemoteAddress()) { // We try to find a level lower than 7
                 return member;
                 break;
             }
@@ -69,7 +69,6 @@ float UtilitiesManager::CalculateMoreRateXPInGroup(Player* player, uint32 quest_
     if (!group)
         return 1.0f;
 
-
     bool ShouldGetExp = true;
 
     Group::MemberSlotList const& members = group->GetMemberSlots();
@@ -113,12 +112,15 @@ void UtilitiesManager::CompleteSpecialQuests(Player * player)
                         uint32 amount = urand(500, 1000);
                         member->ModifyMoney(member->getLevel() * amount);
                         std::string msg = "|cff00FF11Great! You have helped a lower level player than you. You get |cffF2B700" + std::to_string(amount) + "|r golds|r";
-                        ChatHandler(player->GetSession()).SendSysMessage(msg.c_str());
+                        member->GetSession()->SendAreaTriggerMessage(msg.c_str());
                     }
                     else {
                         member->GetSession()->SendAreaTriggerMessage("|cffFF0000You are too far away from a low level player to get a reward.|r");
                     }
                 }
+            }
+            else {
+                member->GetSession()->SendAreaTriggerMessage("|cffFF0000You need to be group leader to get a reward from low level player.|r");
             }
         }
     }
