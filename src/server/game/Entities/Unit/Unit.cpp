@@ -10832,7 +10832,7 @@ bool Unit::InitTamedPet(Pet* pet, uint8 level, uint32 spell_id)
                 loot->FillLoot(lootid, LootTemplates_Creature, looter, false, false, creature->GetLootMode());
 
             if (creature->GetLootMode() > 0)
-                loot->generateMoneyLoot(creature->GetCreatureTemplate()->mingold, creature->GetCreatureTemplate()->maxgold, creature->isWorldBoss());
+                loot->generateMoneyLoot(creature->GetCreatureTemplate()->mingold, creature->GetCreatureTemplate()->maxgold, creature->IsDungeonBoss());
 
             if (group)
             {
