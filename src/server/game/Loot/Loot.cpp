@@ -398,14 +398,19 @@ void Loot::NotifyQuestItemRemoved(uint8 questIndex)
 
 void Loot::generateMoneyLoot(uint32 minAmount, uint32 maxAmount, bool isWorldBoss)
 {
+    float rate = sWorld->getRate(RATE_DROP_MONEY);
+
+    if (isWorldBoss)
+        rate += 10.f;
+
     if (maxAmount > 0)
     {
         if (maxAmount <= minAmount)
-            gold = uint32(maxAmount * isWorldBoss == true ? 5.f : sWorld->getRate(RATE_DROP_MONEY));
+            gold = uint32(maxAmount *rate);
         else if ((maxAmount - minAmount) < 32700)
-            gold = uint32(urand(minAmount, maxAmount) * isWorldBoss == true ? 5.f : sWorld->getRate(RATE_DROP_MONEY));
+            gold = uint32(urand(minAmount, maxAmount) * rate);
         else
-            gold = uint32(urand(minAmount >> 8, maxAmount >> 8) * isWorldBoss == true ? 5.f : sWorld->getRate(RATE_DROP_MONEY)) << 8;
+            gold = uint32(urand(minAmount >> 8, maxAmount >> 8) * rate) << 8;
     }
 }
 
